@@ -1,0 +1,1867 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Andrei – Web & Graphic Designer</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --dark: #0f0f0f;
+      --dark2: #161616;
+      --dark3: #1e1e1e;
+      --card: #242424;
+      --border: #2e2e2e;
+      --gold: #c9a96e;
+      --gold2: #e8c98a;
+      --text: #e8e2d9;
+      --muted: #888078;
+      --soft: #5a5248;
+      --nav-h: 64px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 19px;
+    }
+
+    body {
+      background: var(--dark);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ════════════════════════════
+       NAVBAR
+    ════════════════════════════ */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(20px, 5vw, 60px);
+      background: rgba(15, 15, 15, .88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: background .3s, height .3s;
+    }
+
+    nav.scrolled {
+      height: 54px;
+      background: rgba(15, 15, 15, .97);
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: .02em;
+      flex-shrink: 0;
+    }
+
+    .nav-logo span {
+      color: var(--gold);
+    }
+
+    /* Desktop links */
+    .nav-center {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 32px;
+    }
+
+    .nav-links a {
+      font-size: .72rem;
+      font-weight: 500;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      position: relative;
+      padding-bottom: 3px;
+      transition: color .3s;
+      white-space: nowrap;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--gold);
+      transition: width .3s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--gold2);
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      width: 100%;
+    }
+
+    /* Lang toggle */
+    .lang-toggle {
+      display: flex;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .lang-btn {
+      font-size: .65rem;
+      font-weight: 500;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      background: transparent;
+      color: var(--muted);
+      border: none;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: all .25s;
+    }
+
+    .lang-btn.active {
+      background: var(--gold);
+      color: var(--dark);
+    }
+
+    .lang-btn:hover:not(.active) {
+      background: rgba(201, 169, 110, .12);
+      color: var(--gold2);
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all .3s;
+    }
+
+    .hamburger.open span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .hamburger.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.open span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* Mobile menu */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: var(--nav-h);
+      left: 0;
+      right: 0;
+      background: rgba(15, 15, 15, .98);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      z-index: 199;
+      padding: 24px clamp(20px, 5vw, 40px);
+      flex-direction: column;
+      gap: 4px;
+      transform: translateY(-8px);
+      opacity: 0;
+      transition: opacity .3s, transform .3s;
+    }
+
+    .mobile-menu.open {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .mobile-menu a {
+      font-size: .85rem;
+      font-weight: 400;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      transition: color .25s;
+    }
+
+    .mobile-menu a:last-of-type {
+      border-bottom: none;
+    }
+
+    .mobile-menu a:hover {
+      color: var(--gold2);
+    }
+
+    .mobile-lang {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .mobile-lang .lang-btn {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      font-size: .75rem;
+    }
+
+    .mobile-lang .lang-btn.active {
+      border-color: var(--gold);
+    }
+
+    /* ════════════════════════════
+       HERO
+    ════════════════════════════ */
+    #hero {
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      padding: calc(var(--nav-h) + 40px) clamp(20px, 5vw, 60px) 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 60% at 70% 40%, rgba(201, 169, 110, .07) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(201, 169, 110, .04) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(201, 169, 110, .04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201, 169, 110, .04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(32px, 6vw, 80px);
+      align-items: center;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .68rem;
+      font-weight: 500;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+
+    .hero-tag::before {
+      content: '';
+      width: 28px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.6rem, 6vw, 5rem);
+      font-weight: 300;
+      line-height: 1.05;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .hero-name strong {
+      display: block;
+      font-weight: 500;
+      color: var(--gold2);
+    }
+
+    .hero-subtitle {
+      font-size: clamp(.85rem, 2vw, 1rem);
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    .hero-desc {
+      font-size: clamp(.8rem, 1.6vw, .9rem);
+      color: var(--muted);
+      line-height: 1.85;
+      margin-bottom: 32px;
+      max-width: 440px;
+    }
+
+    .hero-contacts {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .contact-line {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: .78rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .3s;
+    }
+
+    .contact-line:hover {
+      color: var(--gold2);
+    }
+
+    .contact-line .icon {
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .85rem;
+      flex-shrink: 0;
+      transition: all .3s;
+    }
+
+    .contact-line:hover .icon {
+      border-color: var(--gold);
+      background: rgba(201, 169, 110, .1);
+    }
+
+    /* Hero card */
+    .hero-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: clamp(24px, 4vw, 36px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .hc-monogram {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 6vw, 5rem);
+      font-weight: 300;
+      color: var(--border);
+      line-height: 1;
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      user-select: none;
+    }
+
+    .hc-label {
+      font-size: .6rem;
+      font-weight: 500;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+
+    .hc-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 12px;
+    }
+
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      font-weight: 400;
+      color: var(--gold2);
+      line-height: 1;
+    }
+
+    .stat-desc {
+      font-size: .7rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .hc-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 20px 0;
+    }
+
+    .hc-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tool-tag {
+      font-size: .62rem;
+      font-weight: 500;
+      letter-spacing: .06em;
+      padding: 4px 9px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--muted);
+      transition: all .3s;
+    }
+
+    .tool-tag:hover {
+      border-color: var(--gold);
+      color: var(--gold2);
+      background: rgba(201, 169, 110, .08);
+    }
+
+    /* ════════════════════════════
+       SECTIONS COMMON
+    ════════════════════════════ */
+    .section-wrap {
+      padding: clamp(60px, 10vw, 120px) clamp(20px, 5vw, 60px);
+    }
+
+    .section-wrap-alt {
+      background: var(--dark2);
+      padding: clamp(60px, 10vw, 120px) clamp(20px, 5vw, 60px);
+    }
+
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: clamp(36px, 6vw, 64px);
+      flex-wrap: wrap;
+    }
+
+    .section-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 300;
+      color: var(--border);
+      line-height: 1;
+      user-select: none;
+      flex-shrink: 0;
+    }
+
+    .section-sub {
+      font-size: .6rem;
+      font-weight: 500;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 400;
+      color: var(--text);
+      line-height: 1.1;
+    }
+
+    .section-line {
+      flex: 1;
+      min-width: 40px;
+      height: 1px;
+      background: linear-gradient(to right, var(--border), transparent);
+    }
+
+    /* ════════════════════════════
+       ABOUT
+    ════════════════════════════ */
+    .about-grid {
+      display: flex;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(32px, 6vw, 60px);
+      align-items: start;
+      margin-bottom: 10rem;
+    }
+
+    .about-text p {
+      font-size: clamp(.82rem, 1.5vw, .9rem);
+      color: var(--muted);
+      line-height: 1.9;
+      margin-bottom: 18px;
+    }
+
+    .about-text p strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .about-highlight {
+      border-left: 2px solid var(--gold);
+      padding-left: 18px;
+      margin: 24px 0;
+    }
+
+    .about-highlight p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      font-style: italic;
+      color: var(--text) !important;
+      line-height: 1.6;
+    }
+
+    .info-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .info-row {
+      display: grid;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      gap: 12px;
+      transition: background .3s;
+    }
+
+    .info-row:last-child {
+      border-bottom: none;
+    }
+
+    .info-row:hover {
+      background: rgba(201, 169, 110, .05);
+    }
+
+    .info-key {
+      font-size: .68rem;
+      font-weight: 500;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--soft);
+      flex-shrink: 0;
+    }
+
+    .info-val {
+      font-size: .8rem;
+      color: var(--text);
+      text-align: right;
+      word-break: break-word;
+    }
+
+    .info-val a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    .info-val a:hover {
+      color: var(--gold2);
+    }
+
+    /* ════════════════════════════
+       TIMELINE
+    ════════════════════════════ */
+    .timeline {
+      position: relative;
+      padding-left: clamp(20px, 4vw, 32px);
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      bottom: 8px;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--gold), var(--border), transparent);
+    }
+
+    .tl-entry {
+      position: relative;
+      margin-bottom: clamp(24px, 4vw, 48px);
+      opacity: 0;
+      transform: translateX(-16px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+
+    .tl-entry.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .tl-entry::before {
+      content: '';
+      position: absolute;
+      left: clamp(-24px, -4vw, -36px);
+      top: 10px;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+      background: var(--dark2);
+      transition: background .3s;
+    }
+
+    .tl-entry:hover::before {
+      background: var(--gold);
+    }
+
+    .tl-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: clamp(18px, 3vw, 28px) clamp(18px, 3vw, 32px);
+      transition: border-color .3s, transform .3s;
+    }
+
+    .tl-card:hover {
+      border-color: rgba(201, 169, 110, .35);
+      transform: translateX(4px);
+    }
+
+    .tl-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 14px;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .tl-role {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.2;
+    }
+
+    .tl-company {
+      font-size: .76rem;
+      font-weight: 500;
+      color: var(--gold);
+      margin-top: 3px;
+    }
+
+    .tl-badge {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+    }
+
+    .tl-period {
+      font-size: .66rem;
+      font-weight: 500;
+      letter-spacing: .08em;
+      color: var(--muted);
+      background: var(--dark3);
+      padding: 3px 9px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .tl-loc {
+      font-size: .64rem;
+      color: var(--soft);
+    }
+
+    .tl-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .tl-bullets li {
+      font-size: clamp(.75rem, 1.4vw, .8rem);
+      color: var(--muted);
+      padding-left: 16px;
+      position: relative;
+      line-height: 1.65;
+    }
+
+    .tl-bullets li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+      font-size: .6rem;
+      top: 4px;
+    }
+
+    /* ════════════════════════════
+       EDUCATION
+    ════════════════════════════ */
+    .edu-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: clamp(24px, 4vw, 40px);
+      display: flex;
+      align-items: center;
+      gap: clamp(20px, 4vw, 32px);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity .6s ease, transform .6s ease, border-color .3s;
+    }
+
+    .edu-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .edu-card:hover {
+      border-color: rgba(201, 169, 110, .4);
+    }
+
+    .edu-icon {
+      width: clamp(52px, 8vw, 70px);
+      height: clamp(52px, 8vw, 70px);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: clamp(1.4rem, 3vw, 1.8rem);
+      flex-shrink: 0;
+    }
+
+    .edu-degree {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.3rem, 3vw, 1.7rem);
+      font-weight: 400;
+      color: var(--text);
+      line-height: 1.2;
+    }
+
+    .edu-school {
+      font-size: clamp(.75rem, 1.5vw, .82rem);
+      color: var(--gold);
+      margin-top: 4px;
+    }
+
+    .edu-year {
+      display: inline-block;
+      font-size: .66rem;
+      font-weight: 500;
+      letter-spacing: .1em;
+      color: var(--muted);
+      background: var(--dark3);
+      padding: 3px 10px;
+      border-radius: 4px;
+      margin-top: 10px;
+    }
+
+    /* ════════════════════════════
+       SKILLS
+    ════════════════════════════ */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(20px, 3vw, 40px);
+    }
+
+    .skill-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: clamp(20px, 3vw, 32px);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity .5s ease, transform .5s ease;
+    }
+
+    .skill-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .skill-card-title {
+      font-size: .62rem;
+      font-weight: 500;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .skill-bar-item {
+      margin-bottom: 16px;
+    }
+
+    .skill-bar-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .sb-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+
+    .sb-name {
+      font-size: .78rem;
+      color: var(--text);
+    }
+
+    .sb-pct {
+      font-size: .68rem;
+      color: var(--gold);
+      font-weight: 500;
+    }
+
+    .sb-track {
+      height: 4px;
+      background: var(--dark3);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .sb-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold), var(--gold2));
+      border-radius: 2px;
+      width: 0%;
+      transition: width 1.2s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    .tag-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .stag {
+      font-size: .72rem;
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--muted);
+      transition: all .3s;
+      cursor: default;
+    }
+
+    .stag:hover {
+      border-color: var(--gold);
+      color: var(--gold2);
+      background: rgba(201, 169, 110, .08);
+      transform: translateY(-2px);
+    }
+
+    .lang-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .lang-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .lang-name-label {
+      font-size: .8rem;
+      color: var(--text);
+      width: 80px;
+      flex-shrink: 0;
+    }
+
+    .lang-dots {
+      display: flex;
+      gap: 6px;
+      flex: 1;
+    }
+
+    .lang-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      background: transparent;
+      transition: all .3s;
+    }
+
+    .lang-dot.active {
+      background: var(--gold);
+      border-color: var(--gold);
+      box-shadow: 0 0 6px rgba(201, 169, 110, .4);
+    }
+
+    .lang-level-label {
+      font-size: .66rem;
+      font-weight: 500;
+      color: var(--gold);
+    }
+
+    /* ════════════════════════════
+       FOOTER
+    ════════════════════════════ */
+    footer {
+      text-align: center;
+      padding: clamp(32px, 6vw, 48px) 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 300;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .footer-logo span {
+      color: var(--gold);
+    }
+
+    .footer-sub {
+      font-size: .7rem;
+      color: var(--soft);
+      letter-spacing: .08em;
+    }
+
+    /* ════════════════════════════
+       BACK TO TOP
+    ════════════════════════════ */
+    .back-to-top {
+      position: fixed;
+      bottom: clamp(20px, 4vw, 36px);
+      right: clamp(16px, 3vw, 36px);
+      z-index: 300;
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity .35s, transform .35s, background .25s, border-color .25s, box-shadow .25s;
+      pointer-events: none;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
+    }
+
+    .back-to-top:hover {
+      background: rgba(201, 169, 110, .15);
+      border-color: var(--gold);
+      box-shadow: 0 0 20px rgba(201, 169, 110, .2);
+    }
+
+    .back-to-top svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--gold);
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: transform .25s;
+    }
+
+    .back-to-top:hover svg {
+      transform: translateY(-2px);
+    }
+
+    @keyframes bounce {
+
+      0%,
+      80%,
+      100% {
+        transform: scale(.6);
+        opacity: .4;
+      }
+
+      40% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .translate-label {
+      font-size: .82rem;
+      color: var(--muted);
+    }
+
+    .translate-label strong {
+      color: var(--gold2);
+      font-weight: 500;
+    }
+
+    /* ════════════════════════════
+       REVEAL
+    ════════════════════════════ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ════════════════════════════
+       RESPONSIVE BREAKPOINTS
+    ════════════════════════════ */
+
+    /* Tablet landscape / small desktop */
+    @media (max-width: 1024px) {
+      .hero-content {
+        grid-template-columns: 1fr;
+        max-width: 600px;
+      }
+
+      .hero-card {
+        display: flex;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Tablet portrait */
+    @media (max-width: 768px) {
+      .nav-center {
+        display: none;
+      }
+
+      .hero-card {
+        display: block;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .mobile-menu {
+        display: flex;
+      }
+
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-desc {
+        max-width: 100%;
+      }
+    }
+
+    /* Mobile */
+    @media (max-width: 480px) {
+      :root {
+        --nav-h: 58px;
+      }
+
+      .hero-card {
+        display: block;
+      }
+
+      .tl-top {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .tl-badge {
+        align-items: flex-start;
+      }
+
+      .edu-card {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .lang-row {
+        gap: 8px;
+      }
+
+      .lang-name-label {
+        width: 70px;
+      }
+
+      .info-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+      }
+
+      .info-val {
+        text-align: left;
+      }
+    }
+
+    /* Very small phones */
+    @media (max-width: 360px) {
+      .hero-name {
+        font-size: 2.2rem;
+      }
+
+      .section-title {
+        font-size: 1.6rem;
+      }
+
+      .hero-card {
+        display: block;
+      }
+
+      .tl-role {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ══════ NAVBAR ══════ -->
+  <nav id="navbar">
+    <a href="#hero" class="nav-logo">Andrei<span> Mihai</span></a>
+
+    <div class="nav-center">
+      <ul class="nav-links">
+        <li><a href="#despre" data-section="despre" data-ro="Despre mine" data-en="About me">Despre mine</a></li>
+        <li><a href="#experienta" data-section="experienta" data-ro="Experiență" data-en="Experience">Experiență</a>
+        </li>
+        <li><a href="#educatie" data-section="educatie" data-ro="Educație" data-en="Education">Educație</a></li>
+        <li><a href="#competente" data-section="competente" data-ro="Competențe" data-en="Skills">Competențe</a></li>
+      </ul>
+      <div class="lang-toggle">
+        <button class="lang-btn active" id="btn-ro" onclick="setLang('ro')">RO</button>
+        <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+      </div>
+    </div>
+
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#despre" onclick="closeMobile()" data-ro="Despre mine" data-en="About me">Despre mine</a>
+    <a href="#experienta" onclick="closeMobile()" data-ro="Experiență" data-en="Experience">Experiență</a>
+    <a href="#educatie" onclick="closeMobile()" data-ro="Educație" data-en="Education">Educație</a>
+    <a href="#competente" onclick="closeMobile()" data-ro="Competențe" data-en="Skills">Competențe</a>
+    <div class="mobile-lang">
+      <button class="lang-btn active" id="mbtn-ro" onclick="setLang('ro'); closeMobile()">RO</button>
+      <button class="lang-btn" id="mbtn-en" onclick="setLang('en'); closeMobile()">EN</button>
+    </div>
+  </div>
+
+  <!-- Translate overlay -->
+  <div class="translate-overlay" id="translateOverlay">
+    <div class="translate-box">
+      <div class="translate-spinner"><span></span><span></span><span></span></div>
+      <div class="translate-label" id="translateLabel">Se traduce în <strong>Engleză</strong>...</div>
+    </div>
+  </div>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top"
+    onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <svg viewBox="0 0 24 24">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
+
+  <!-- ══════ HERO ══════ -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid-bg"></div>
+    <div class="hero-content">
+      <div class="hero-text">
+        <div class="hero-tag" data-i18n="hero-tag">Grphic Designer & Digital Marketer</div>
+        <h1 class="hero-name">Andrei<strong>Mihai</strong></h1>
+        <p class="hero-subtitle" data-i18n="hero-subtitle">București, România</p>
+        <p class="hero-desc" data-i18n="hero-desc">Marketing Assistent cu experiență în gestionarea și
+          personalizarea website-urilor pentru clienți. Am realizat modificări de layout, conținut și
+          funcționalități
+          folosind teme și plugin-uri, adaptând site-urile în funcție de cerințele de business. <br><br>Specializat pe
+          tool-uri
+          precum Adobe Illustrator, Adobe Photoshop, Adobe XD si Canva pentru crearea de materiale vizuale digitale
+          (bannere, logo-uri, alte elemente grafice), susținând coerența identității vizuale a clienților.</p>
+        <div class="hero-contacts">
+          <a href="tel:+40726486455" class="contact-line">
+            <span class="icon">📞</span>+40 726 486 455
+          </a>
+          <a href="mailto:andrei.designam@gmail.com" class="contact-line">
+            <span class="icon">✉️</span>andrei.designam@gmail.com
+          </a>
+          <a href="https://www.linkedin.com/in/andreidesignam/" target="_blank" class="contact-line">
+            <span class="icon">🔗</span>linkedin.com/in/andreidesignam
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <div class="hc-monogram">AM</div>
+        <div class="hc-label" data-i18n="hc-label">Profil Profesional</div>
+        <div class="hc-stats">
+          <div class="stat-item">
+            <div class="stat-num">3</div>
+            <div class="stat-desc" data-i18n="stat-exp">Ani experiență</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">∞</div>
+            <div class="stat-desc" data-i18n="stat-creat">Creativitate</div>
+          </div>
+        </div>
+        <div class="hc-divider"></div>
+        <div class="hc-tools">
+          <span class="tool-tag">WordPress</span><span class="tool-tag">Adobe Photoshop</span>
+          <span class="tool-tag">Adobe Illustrator</span><span class="tool-tag">Canva</span>
+          <span class="tool-tag">Google Search Console</span><span class="tool-tag">HTML/CSS/SASS</span><span
+            class="tool-tag">HTML/CSS/SASS</span><span class="tool-tag">Semrush</span><span class="tool-tag">Claude
+            AI</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ DESPRE MINE ══════ -->
+  <div id="despre" class="section-wrap">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <div class="section-num">01</div>
+        <div>
+          <div class="section-sub" data-i18n="sub-despre">Cine sunt</div>
+          <h2 class="section-title" data-i18n="title-despre">Despre mine</h2>
+        </div>
+        <div class="section-line"></div>
+      </div>
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <p data-i18n="about-p1">Digital Marketer cu experiență practică în administrarea
+            website-urilor WordPress și optimizarea conținutului pentru mediul online. Am lucrat direct pe site-urile
+            clienților, gestionând pagini, structură și conținut pentru o experiență de utilizare mai eficientă.
+          </p>
+          <p data-i18n="about-p2">Am aplicat tehnici de optimizare SEO on-page prin editarea elementelor esențiale
+            (meta, titluri, imagini, structură), utilizând instrumente specifice platformei WordPress.<br><br>
+            Am realizat materiale vizuale pentru mediul digital în Canva, contribuind la comunicarea vizuală a
+            brandurilor și la coerența prezenței online.
+          </p>
+          <div class="about-highlight">
+            <p data-i18n="about-p3">Am studiat <strong>Marketingul</strong> la ASE București, ceea ce îmi oferă o
+              perspectivă solidă asupra comunicării de brand și comportamentului consumatorului.</p>
+          </div>
+          <div class="info-card reveal" style="transition-delay:.15s">
+            <div class="info-row"><span class="info-key" data-i18n="ik-loc">Locație</span><span
+                class="info-val">București, România</span></div>
+            <div class="info-row"><span class="info-key" data-i18n="ik-email">Email</span><span class="info-val"><a
+                  href="mailto:andrei.designam@gmail.com">andrei.designam@gmail.com</a></span></div>
+            <div class="info-row"><span class="info-key" data-i18n="ik-tel">Telefon</span><span class="info-val">+40 726
+                486 455</span></div>
+            <div class="info-row"><span class="info-key">LinkedIn</span><span class="info-val"><a
+                  href="https://www.linkedin.com/in/andreidesignam/" target="_blank">andreidesignam</a></span></div>
+            <div class="info-row"><span class="info-key" data-i18n="ik-lang">Limbă</span><span class="info-val">RO · EN
+                Avansat</span></div>
+            <!-- <div class="info-row"><span class="info-key" data-i18n="ik-avail">Disponibilitate</span><span
+                class="info-val" style="color:var(--gold)" data-i18n="iv-avail">● Disponibil</span></div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════ EXPERIENȚĂ ══════ -->
+    <div id="experienta" class="section-wrap-alt">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="section-num">02</div>
+          <div>
+            <div class="section-sub" data-i18n="sub-exp">Cariera mea</div>
+            <h2 class="section-title" data-i18n="title-exp">Experiență</h2>
+          </div>
+          <div class="section-line"></div>
+        </div>
+        <div class="timeline">
+
+          <div class="tl-entry">
+            <div class="tl-card">
+              <div class="tl-top">
+                <div>
+                  <div class="tl-role" data-i18n="role1">Junior Digital Marketing Assistant</div>
+                  <div class="tl-company">Atelierul de Digitalizare</div>
+                </div>
+                <div class="tl-badge">
+                  <span class="tl-period">Apr. 2024 – Apr. 2025</span>
+                  <span class="tl-loc">București</span>
+                </div>
+              </div>
+              <ul class="tl-bullets">
+                <li data-i18n="r1b1">Am administrat și personalizat website-uri în WordPress, realizând modificări de
+                  layout, conținut și funcționalități de bază în funcție de cerințele clienților;</li>
+                <li data-i18n="r1b2">Am implementat optimizări SEO on-page la nivel de conținut, incluzând editarea
+                  titlurilor, meta descrierilor, structurii paginilor și imaginilor, utilizând plugin-uri dedicate (ex:
+                  Yoast SEO);
+                </li>
+                <li data-i18n="r1b3">Am utilizat Canva pentru crearea de materiale vizuale simple (bannere, postări,
+                  elemente grafice), menținând coerența identității vizuale a clienților;</li>
+                <li data-i18n="r1b3">Am contribuit la îmbunătățirea experienței utilizatorului prin optimizarea
+                  structurii paginilor și a vitezei de încărcare (la nivel de configurare WordPress și plugin-uri).</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- <div class="tl-entry">
+            <div class="tl-card">
+              <div class="tl-top">
+                <div>
+                  <div class="tl-role" data-i18n="role2">Sales Representative</div>
+                  <div class="tl-company">Cărturești</div>
+                </div>
+                <div class="tl-badge">
+                  <span class="tl-period">Iul. 2021 – Apr. 2024</span>
+                  <span class="tl-loc">București</span>
+                </div>
+              </div>
+              <ul class="tl-bullets">
+                <li data-i18n="r2b1">Am interacționat constant cu clienții, identificându-le nevoile și oferindu-le
+                  recomandări personalizate de produse, pentru a consolida loialitatea acestora;</li>
+                <li data-i18n="r2b2">Am asigurat buna organizare a produselor la raft, respectând standardele de
+                  aranjare și vizibilitate, precum și gestionarea activităților zilnice ale librăriei;</li>
+                <li data-i18n="r2b3">Am oferit suport în procesul de integrare a noilor colegi, facilitând acomodarea
+                  acestora prin instruire, ghidare și transmiterea procedurilor interne.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="tl-entry">
+            <div class="tl-card">
+              <div class="tl-top">
+                <div>
+                  <div class="tl-role" data-i18n="role3">Sales Representative</div>
+                  <div class="tl-company">Decathlon România</div>
+                </div>
+                <div class="tl-badge">
+                  <span class="tl-period">Dec. 2018 – Iul. 2021</span>
+                  <span class="tl-loc">București</span>
+                </div>
+              </div>
+              <ul class="tl-bullets">
+                <li data-i18n="r3b1">Am oferit consultanță clienților pentru alegerea produselor potrivite nevoilor lor
+                  sportive, asigurând o experiență de cumpărare plăcută și eficientă;</li>
+                <li data-i18n="r3b2">M-am ocupat de aranjarea și organizarea raionului, gestionarea stocurilor și
+                  menținerea unei prezentări atractive a produselor;
+                </li>
+                <li data-i18n="r3b3">Am contribuit la atingerea obiectivelor de vânzări prin promovarea activă a
+                  ofertelor și implicarea în activitățile de merchandising și fidelizare a clienților.</li>
+              </ul>
+            </div>
+          </div> -->
+
+          <div class="tl-entry">
+            <div class="tl-card">
+              <div class="tl-top">
+                <div>
+                  <div class="tl-role" data-i18n="role4">Graphic Designer</div>
+                  <div class="tl-company">Self-Employed (Freelance)</div>
+                </div>
+                <div class="tl-badge">
+                  <span class="tl-period">Aug. 2018 – Dec. 2018</span>
+                  <span class="tl-loc">București</span>
+                </div>
+              </div>
+              <ul class="tl-bullets">
+                <li data-i18n="r4b1">Am dezvoltat identități vizuale pentru branduri aflate la început de drum și am
+                  creat materiale grafice pentru mediul online și offline (logo-uri, bannere, afișe, materiale
+                  promoționale);</li>
+                <li data-i18n="r4b2">M-am ocupat de conceperea și implementarea designului pentru website-uri și social
+                  media, adaptând vizualurile la cerințele fiecărui client;</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="tl-entry">
+            <div class="tl-card">
+              <div class="tl-top">
+                <div>
+                  <div class="tl-role" data-i18n="role5">Graphic Designer</div>
+                  <div class="tl-company">The Public Advisors</div>
+                </div>
+                <div class="tl-badge">
+                  <span class="tl-period">Feb. 2018 – Iul. 2018</span>
+                  <span class="tl-loc">București</span>
+                </div>
+              </div>
+              <ul class="tl-bullets">
+                <li data-i18n="r5b1">Am realizat materiale vizuale pentru campanii de comunicare și
+                  promovare (logo-uri, bannere, afișe, materiale promoționale);</li>
+                <li data-i18n="r5b2">Am creat designuri pentru social media, prezentări și materiale print, respectând
+                  identitatea vizuală a brandurilor și cerințele echipei de comunicare;</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- <div class="tl-entry">
+            <div class="tl-card">
+              <div class="tl-top">
+                <div>
+                  <div class="tl-role" data-i18n="role3">Sales Representative</div>
+                  <div class="tl-company">Decathlon România</div>
+                </div>
+                <div class="tl-badge">
+                  <span class="tl-period">Nov. 2017 – Feb. 2018</span>
+                  <span class="tl-loc">București</span>
+                </div>
+              </div>
+              <ul class="tl-bullets">
+                <li data-i18n="r3b1">Am oferit consultanță clienților pentru alegerea produselor potrivite nevoilor lor
+                  sportive, asigurând o experiență de cumpărare plăcută și eficientă;</li>
+                <li data-i18n="r3b2">M-am ocupat de aranjarea și organizarea raionului, gestionarea stocurilor și
+                  menținerea unei prezentări atractive a produselor;
+                </li>
+                <li data-i18n="r3b3">Am contribuit la atingerea obiectivelor de vânzări prin promovarea activă a
+                  ofertelor și implicarea în activitățile de merchandising și fidelizare a clienților.</li>
+              </ul>
+            </div>
+          </div> -->
+
+          <div class="tl-entry">
+            <div class="tl-card">
+              <div class="tl-top">
+                <div>
+                  <div class="tl-role" data-i18n="role6">Graphic Designer</div>
+                  <div class="tl-company">Webtab / Kapital HR</div>
+                </div>
+                <div class="tl-badge">
+                  <span class="tl-period">Dec. 2016 – Dec. 2017</span>
+                  <span class="tl-loc">București</span>
+                </div>
+              </div>
+              <ul class="tl-bullets">
+                <li data-i18n="r6b1">Am realizat identități vizuale și materiale promoționale (logo-uri, bannere,
+                  template-uri web);</li>
+                <li data-i18n="r6b2">Am creat proiecte in HTML/CSS si JavaScript și layouturi pentru materiale tipărite
+                  și
+                  digitale.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════ EDUCAȚIE ══════ -->
+    <div id="educatie" class="section-wrap">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="section-num">03</div>
+          <div>
+            <div class="section-sub" data-i18n="sub-edu">Formare academică</div>
+            <h2 class="section-title" data-i18n="title-edu">Educație</h2>
+          </div>
+          <div class="section-line"></div>
+        </div>
+        <div class="edu-card reveal">
+          <div class="edu-icon">🎓</div>
+          <div>
+            <div class="edu-degree" data-i18n="edu-degree">Licență în Marketing</div>
+            <div class="edu-school" data-i18n="edu-school">Academia de Studii Economice din București</div>
+            <span class="edu-year">2009 – 2013</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════ COMPETENȚE ══════ -->
+    <div id="competente" class="section-wrap-alt">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="section-num">04</div>
+          <div>
+            <div class="section-sub" data-i18n="sub-skills">Ce știu să fac</div>
+            <h2 class="section-title" data-i18n="title-skills">Competențe</h2>
+          </div>
+          <div class="section-line"></div>
+        </div>
+        <div class="skills-grid">
+
+          <div class="skill-card" style="transition-delay:0s">
+            <div class="skill-card-title" data-i18n="sc-design">Design & Grafică</div>
+            <div class="skill-bar-item">
+              <div class="sb-header"><span class="sb-name">Adobe Photoshop</span><span class="sb-pct">88%</span></div>
+              <div class="sb-track">
+                <div class="sb-fill" data-width="88"></div>
+              </div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="sb-header"><span class="sb-name">Adobe Illustrator</span><span class="sb-pct">82%</span></div>
+              <div class="sb-track">
+                <div class="sb-fill" data-width="82"></div>
+              </div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="sb-header"><span class="sb-name">Canva</span><span class="sb-pct">95%</span></div>
+              <div class="sb-track">
+                <div class="sb-fill" data-width="95"></div>
+              </div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="sb-header"><span class="sb-name" data-i18n="sk-brand">Adobe XD</span><span
+                  class="sb-pct">80%</span></div>
+              <div class="sb-track">
+                <div class="sb-fill" data-width="80"></div>
+              </div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="sb-header"><span class="sb-name" data-i18n="sk-brand">Figma</span><span
+                  class="sb-pct">75%</span></div>
+              <div class="sb-track">
+                <div class="sb-fill" data-width="75"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="skill-card" style="transition-delay:.1s">
+            <div class="skill-card-title" data-i18n="sc-web">Digital Marketing</div>
+            <div class="skill-bar-item">
+              <div class="sb-header"><span class="sb-name">WordPress</span><span class="sb-pct">85%</span></div>
+              <div class="sb-track">
+                <div class="sb-fill" data-width="85"></div>
+              </div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="sb-header"><span class="sb-name">SEO On-Page</span><span class="sb-pct">80%</span></div>
+              <div class="sb-track">
+                <div class="sb-fill" data-width="80"></div>
+              </div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="sb-header"><span class="sb-name">HTML & CSS/SASS</span><span class="sb-pct">65%</span></div>
+              <div class="sb-track">
+                <div class="sb-fill" data-width="65"></div>
+              </div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="sb-header"><span class="sb-name">Claude AI</span><span class="sb-pct">80%</span></div>
+              <div class="sb-track">
+                <div class="sb-fill" data-width="72"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="skill-card" style="transition-delay:.3s">
+            <div class="skill-card-title" data-i18n="sc-lang">Limbi Străine</div>
+            <div class="lang-row">
+              <span class="lang-name-label" data-i18n="lang-ro">Română</span>
+              <div class="lang-dots">
+                <span class="lang-dot active"></span><span class="lang-dot active"></span>
+                <span class="lang-dot active"></span><span class="lang-dot active"></span>
+                <span class="lang-dot active"></span>
+              </div>
+              <span class="lang-level-label" data-i18n="level-native">Nativ</span>
+            </div>
+            <div class="lang-row">
+              <span class="lang-name-label" data-i18n="lang-en">Engleză</span>
+              <div class="lang-dots">
+                <span class="lang-dot active"></span><span class="lang-dot active"></span>
+                <span class="lang-dot active"></span><span class="lang-dot active"></span>
+                <span class="lang-dot"></span>
+              </div>
+              <span class="lang-level-label" data-i18n="level-adv">Avansat</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════ FOOTER ══════ -->
+    <footer>
+      <div class="footer-logo">Andrei<span>.</span></div>
+      <div class="footer-sub" data-i18n="footer-sub">Web & Graphic Designer · București, România</div>
+    </footer>
+
+    <script>
+      /* ══════════════════════════════════
+         HAMBURGER MENU
+      ══════════════════════════════════ */
+      const hamburger = document.getElementById('hamburger');
+      const mobileMenu = document.getElementById('mobileMenu');
+
+      hamburger.addEventListener('click', () => {
+        const isOpen = mobileMenu.classList.contains('open');
+        if (isOpen) {
+          closeMobile();
+        } else {
+          mobileMenu.style.display = 'flex';
+          requestAnimationFrame(() => mobileMenu.classList.add('open'));
+          hamburger.classList.add('open');
+        }
+      });
+
+      function closeMobile() {
+        mobileMenu.classList.remove('open');
+        hamburger.classList.remove('open');
+        setTimeout(() => { mobileMenu.style.display = 'none'; }, 300);
+      }
+
+      // Close on outside click
+      document.addEventListener('click', e => {
+        if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+          if (mobileMenu.classList.contains('open')) closeMobile();
+        }
+      });
+
+      /* ══════════════════════════════════
+         NAVBAR SCROLL
+      ══════════════════════════════════ */
+      const navbar = document.getElementById('navbar');
+      window.addEventListener('scroll', () => {
+        navbar.classList.toggle('scrolled', window.scrollY > 40);
+      }, { passive: true });
+
+      /* ══════════════════════════════════
+         ACTIVE NAV LINK
+      ══════════════════════════════════ */
+      const allSections = document.querySelectorAll('[id]');
+      const navAnchors = document.querySelectorAll('.nav-links a[data-section]');
+
+      function setActive() {
+        let current = '';
+        allSections.forEach(s => {
+          if (window.scrollY >= s.offsetTop - 100) current = s.id;
+        });
+        navAnchors.forEach(a => a.classList.toggle('active', a.dataset.section === current));
+      }
+      window.addEventListener('scroll', setActive, { passive: true });
+
+      /* ══════════════════════════════════
+         BACK TO TOP
+      ══════════════════════════════════ */
+      const backToTop = document.getElementById('backToTop');
+      window.addEventListener('scroll', () => {
+        backToTop.classList.toggle('visible', window.scrollY > 400);
+      }, { passive: true });
+
+      /* ══════════════════════════════════
+         SCROLL REVEAL + SKILL BARS
+      ══════════════════════════════════ */
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            entry.target.querySelectorAll('.sb-fill').forEach(bar => {
+              setTimeout(() => { bar.style.width = bar.dataset.width + '%'; }, 200);
+            });
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+
+      document.querySelectorAll('.reveal, .tl-entry, .edu-card, .skill-card').forEach(el => observer.observe(el));
+
+      /* ══════════════════════════════════
+         TRANSLATE MODULE
+      ══════════════════════════════════ */
+      let currentLang = 'ro';
+      const cache = { ro: {}, en: {} };
+
+      // Build RO snapshot from all data-i18n elements
+      window.addEventListener('load', () => {
+        buildSnapshot();
+        console.log('Snapshot după load:', Object.keys(cache.ro));
+      });
+
+
+      async function translateWithClaude(targetLang) {
+        const overlay = document.getElementById('translateOverlay');
+        const label = document.getElementById('translateLabel');
+        const langName = targetLang === 'en' ? 'Engleză' : 'Română';
+        label.innerHTML = `Se traduce în <strong>${langName}</strong>...`;
+        overlay.classList.add('show');
+
+        // Find keys that aren't cached yet
+        const missing = {};
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.dataset.i18n;
+          const src = targetLang === 'en' ? cache.ro[key] : cache.en[key];
+          if (src && !cache[targetLang][key]) {
+            missing[key] = src; // ← direct, fără tmp.textContent
+          }
+        });
+
+        if (Object.keys(missing).length === 0) {
+          applyLang(targetLang);
+          overlay.classList.remove('show');
+          return;
+        }
+
+        const srcLang = targetLang === 'en' ? 'Romanian' : 'English';
+        const destLang = targetLang === 'en' ? 'English' : 'Romanian';
+
+        const prompt = `You are a professional CV translator. Translate the following JSON values from ${srcLang} to ${destLang}.
+Rules:
+- Keep all JSON keys exactly as-is
+- Preserve all HTML tags (<strong>, <br>, <a>, etc.) exactly as they are
+- Only translate the visible text content, never the HTML attributes
+- Do NOT translate proper nouns: names (Andrei), cities (București), brands (Canva, WordPress, Adobe)
+- Keep dates, percentages, symbols unchanged
+- Return ONLY valid JSON, no markdown, no explanation
+
+${JSON.stringify(missing, null, 2)}`;
+
+        try {
+          const res = await fetch('https://api.anthropic.com/v1/messages', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'x-api-key': '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',
+              'anthropic-version': '2023-06-01',
+              'anthropic-dangerous-direct-browser-access': 'true'
+            },
+            body: JSON.stringify({
+              model: 'claude-sonnet-4-6',
+              max_tokens: 4096,
+              messages: [{ role: 'user', content: prompt }]
+            })
+          });
+
+          const data = await res.json();
+          const raw = data.content.map(c => c.text || '').join('');
+          const clean = raw.replace(/```json|```/g, '').trim();
+          const translated = JSON.parse(clean);
+          Object.assign(cache[targetLang], translated);
+          applyLang(targetLang);
+
+        } catch (err) {
+          console.error('Translation error:', err);
+          label.innerHTML = `<strong style="color:#e77">Eroare. Încearcă din nou.</strong>`;
+          setTimeout(() => overlay.classList.remove('show'), 2200);
+          return;
+        }
+
+        overlay.classList.remove('show');
+      }
+
+      function applyLang(lang) {
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.dataset.i18n;
+          if (cache[lang][key]) el.innerHTML = cache[lang][key];
+        });
+
+        // Update nav link labels
+        document.querySelectorAll('[data-ro][data-en]').forEach(el => {
+          el.textContent = el.dataset[lang] || el.textContent;
+        });
+
+        document.documentElement.lang = lang;
+      }
+
+      async function setLang(lang) {
+        if (lang === currentLang) return;
+        currentLang = lang;
+
+        // Sync both sets of buttons
+        ['btn-ro', 'mbtn-ro'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.classList.toggle('active', lang === 'ro');
+        });
+        ['btn-en', 'mbtn-en'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.classList.toggle('active', lang === 'en');
+        });
+
+        if (lang === 'ro') {
+          applyLang('ro');
+        } else {
+          await translateWithClaude('en');
+        }
+      }
+
+      // Init
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', buildSnapshot);
+      } else {
+        buildSnapshot();
+      }
+    </script>
+</body>
+
+</html>
